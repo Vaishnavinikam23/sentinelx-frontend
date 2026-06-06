@@ -4,14 +4,16 @@ import ChartCard from "../components/charts/ChartCard";
 import EventTypeChart from "../components/charts/EventTypeChart";
 import SeverityPieChart from "../components/charts/SeverityPieChart";
 import RecentEventsTable from "../components/dashboard/RecentEventsTable";
-import LiveAlertsPanel from "../components/alerts/LiveAlertsPanel";
 import { useEffect, useState } from "react";
 import { getEvents } from "../services/eventService";
 import { getDashboardStats } from "../services/dashboardService";
-
+import LiveAlertsPanel from "../components/alerts/LiveAlertsPanel";
+import RecentAlertsTable from "../components/alerts/RecentAlertsTable";
+import { getAlerts } from "../services/alertService";
 
 function DashboardPage() {
     const [events, setEvents] = useState([]);
+    const [alerts, setAlerts] = useState([]);
     const [stats, setStats] = useState({
         totalEvents: 0,
         highSeverity: 0,
@@ -21,12 +23,13 @@ function DashboardPage() {
     useEffect(() => {
         loadEvents();
         loadStats();
+        loadAlerts();
     }, []);
 
     const loadEvents = async () => {
         try {
             const data = await getEvents();
-            setEvents(data);
+            setEvents(data.slice(-20).reverse());
         } catch (error) {
             console.error("Failed to load events", error);
         }
@@ -39,6 +42,14 @@ function DashboardPage() {
                 "Failed to load dashboard stats",
                 error
             );
+        }
+    };
+    const loadAlerts = async () => {
+        try {
+            const data = await getAlerts();
+            setAlerts(data.slice(-20).reverse());
+        } catch (error) {
+            console.error("Failed to load alerts", error);
         }
     };
     return (
@@ -94,7 +105,6 @@ function DashboardPage() {
 
                 </div>
                 <div className="mt-8 grid gap-6 xl:grid-cols-3">
-
                     <div className="xl:col-span-2">
                         <RecentEventsTable events={events} />
                     </div>
@@ -103,6 +113,9 @@ function DashboardPage() {
                         <LiveAlertsPanel />
                     </div>
 
+                    <div className="xl:col-span-3">
+                        <RecentAlertsTable alerts={alerts} />
+                    </div>
                 </div>
             </main>
         </div>

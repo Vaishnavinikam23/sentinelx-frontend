@@ -20,7 +20,7 @@ function RecentEventsTable({ events }) {
                 </h3>
             </div>
 
-            <div className="overflow-x-auto">
+            <div className="max-h-[400px] overflow-y-auto overflow-x-auto">
                 <table className="w-full">
                     <thead>
                     <tr className="border-b border-slate-800 text-left text-sm text-slate-400">
@@ -28,6 +28,7 @@ function RecentEventsTable({ events }) {
                         <th className="p-4">Event Type</th>
                         <th className="p-4">Severity</th>
                         <th className="p-4">Source IP</th>
+                        <th className="p-4">Message</th>
                         <th className="p-4">Timestamp</th>
                     </tr>
                     </thead>
@@ -57,7 +58,9 @@ function RecentEventsTable({ events }) {
                             <td className="p-4 text-slate-300">
                                 {event.sourceIp}
                             </td>
-
+                            <td className="p-4 text-slate-300">
+                                {event.message}
+                            </td>
                             <td className="p-4 text-slate-300">
                                 {new Date(event.timestamp).toLocaleString()}
                             </td>
