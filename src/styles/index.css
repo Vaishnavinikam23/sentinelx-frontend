@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+:root {
+    --bg-primary: #0f172a;
+    --card-bg: #1e293b;
+    --border-color: #334155;
+    --text-primary: #f8fafc;
+
+    --severity-high: #ef4444;
+    --severity-medium: #f59e0b;
+    --severity-low: #22c55e;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+    width: 100%;
+    min-height: 100vh;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: Inter, system-ui, sans-serif;
+}
+
+body {
+    overflow-x: hidden;
+}
